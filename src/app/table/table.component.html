@@ -1,0 +1,55 @@
+
+<!-- Data Picker -->
+<div class=" bg-white p-6 rounded-lg shadow-md ">
+  <form [formGroup]="form" >
+    <div class="flex items-center gap-4 w-full">
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Enter a date range</mat-label>
+        <mat-date-range-input [rangePicker]="picker1">
+          <input formControlName="dateFrom" matStartDate placeholder="Start date" class="w-full">
+          <input formControlName="dateTo" matEndDate placeholder="End date" class="w-full">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker1></mat-date-range-picker>
+      </mat-form-field>
+      <button type="button" (click)="resetHistoricalDateSearch.emit()"
+              class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        Reset
+      </button>
+    </div>
+  </form>
+
+  <div class="overflow-x-auto w-full">
+    <table mat-table [dataSource]="dataSource" matSort class="min-w-full bg-white border rounded-lg shadow-md">
+      <!-- Datetime -->
+      <ng-container matColumnDef="datetime">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="px-4 py-2 text-left border-b">Datetime</th>
+        <td mat-cell *matCellDef="let element" class="px-4 py-2 border-b">{{ element.datetime | date:'dd/MM HH:mm' }}</td>
+      </ng-container>
+
+      <!-- Temperature -->
+      <ng-container matColumnDef="temperature">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="px-4 py-2 text-left border-b">Temperature (°C)</th>
+        <td mat-cell *matCellDef="let element" class="px-4 py-2 border-b">{{ element.temperature | number:'1.1-1' }}</td>
+      </ng-container>
+
+      <!-- Pressure -->
+      <ng-container matColumnDef="pressure">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="px-4 py-2 text-left border-b">Surface Pressure (hPa)</th>
+        <td mat-cell *matCellDef="let element" class="px-4 py-2 border-b">{{ element.pressure }}</td>
+      </ng-container>
+
+      <!-- Humidity -->
+      <ng-container matColumnDef="humidity">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="px-4 py-2 text-left border-b">Relative Humidity (%)</th>
+        <td mat-cell *matCellDef="let element" class="px-4 py-2 border-b">{{ element.humidity }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns" class="bg-gray-100"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="hover:bg-gray-50"></tr>
+    </table>
+  </div>
+
+  <!-- Paginator -->
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons class="mt-4"></mat-paginator>
+</div>

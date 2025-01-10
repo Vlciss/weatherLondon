@@ -1,0 +1,17 @@
+<div class=" bg-blue-50 py-20 ">
+<div class="max-w-[60%] mx-auto">
+  <div class=" grid grid-cols-3 gap-6 mb-10">
+    <app-header class="col-span-3"></app-header>
+    <app-chart class="col-span-2" [data]="data"></app-chart>
+    <app-heat-index></app-heat-index>
+  </div>
+
+  <div class="w-full">
+    <app-table
+      (resetHistoricalDateSearch)="getWeatherData()" (searchForHistoricalDate)="searchForHistoricalDate($event)" [data]="data">
+    </app-table>
+  </div>
+</div>
+
+</div>
+
